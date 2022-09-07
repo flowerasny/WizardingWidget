@@ -2,6 +2,7 @@ package com.flowerasny.widget
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.flowerasny.widget.dogs.ElixirDifficulty
@@ -38,6 +39,14 @@ class ItemRemoteViewFactory(
         return RemoteViews(context.packageName, R.layout.widget_item).apply {
             setTextViewText(R.id.tvTitle, items[position].title)
             setTextViewText(R.id.tvSubtitle, items[position].subtitle)
+
+            val fillInIntent = Intent().apply {
+                Bundle().also { extras ->
+                    extras.putInt(EXTRA_ITEM, position)
+                    putExtras(extras)
+                }
+            }
+            setOnClickFillInIntent(R.id.widget_item, fillInIntent)
         }
     }
 
@@ -65,7 +74,7 @@ data class SingleItem(
     val subtitle: String,
 )
 
-fun ElixirDifficulty.toDifficultyString(): String = when(this) {
+fun ElixirDifficulty.toDifficultyString(): String = when (this) {
     ElixirDifficulty.Unknown -> "❓"
     ElixirDifficulty.Beginner -> "\uD83E\uDDEA".repeat(1)
     ElixirDifficulty.Moderate -> "\uD83E\uDDEA".repeat(2)
