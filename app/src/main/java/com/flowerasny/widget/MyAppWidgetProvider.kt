@@ -28,8 +28,8 @@ class MyAppWidgetProvider : AppWidgetProvider() {
                 putExtra(EXTRA_APPWIDGET_ID, widgetId)
                 data = Uri.parse(toUri(Intent.URI_INTENT_SCHEME))
             }
+
             val views = RemoteViews(context.packageName, R.layout.widget_content).apply {
-                PendingIntent.getService(context, 0, Intent(context, MyAppWidgetService::class.java), 0)
                 setRemoteAdapter(R.id.lvItems, intent)
                 setEmptyView(R.id.lvItems, R.id.tvEmpty)
             }
