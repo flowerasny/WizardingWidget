@@ -3,11 +3,13 @@ package com.flowerasny.widget
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import com.flowerasny.widget.dogs.ElixirDifficulty
 import com.flowerasny.widget.dogs.ElixirsRepository
 import kotlinx.coroutines.runBlocking
+import java.lang.Exception
 
 class MyAppWidgetService : RemoteViewsService() {
 
@@ -44,11 +46,16 @@ class ItemRemoteViewFactory(
 
     override fun onDataSetChanged() {
         runBlocking {
-            items = dogsRepository.getElixirs().map {
-                SingleItem(
-                    title = it.name,
-                    subtitle = "Difficulty: ${it.difficulty.toDifficultyString()}",
-                )
+            try {
+                items = dogsRepository.getElixirs().map {
+                    SingleItem(
+                        title = it.name,
+                        subtitle = "Difficulty: ${it.difficulty.toDifficultyString()}",
+                    )
+                }
+
+            } catch (e: Exception) {
+                Log.d("WidgetTag", "exception!!")
             }
         }
     }
