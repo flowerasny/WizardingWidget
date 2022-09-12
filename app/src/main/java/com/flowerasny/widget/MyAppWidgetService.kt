@@ -25,14 +25,6 @@ class ItemRemoteViewFactory(
     private var items: List<SingleItem> = emptyList()
 
     override fun onCreate() {
-        runBlocking {
-            items = dogsRepository.getElixirs().map {
-                SingleItem(
-                    title = it.name,
-                    subtitle = "Difficulty: ${it.difficulty.toDifficultyString()}",
-                )
-            }
-        }
     }
 
     override fun getViewAt(position: Int): RemoteViews {
@@ -51,6 +43,14 @@ class ItemRemoteViewFactory(
     }
 
     override fun onDataSetChanged() {
+        runBlocking {
+            items = dogsRepository.getElixirs().map {
+                SingleItem(
+                    title = it.name,
+                    subtitle = "Difficulty: ${it.difficulty.toDifficultyString()}",
+                )
+            }
+        }
     }
 
     override fun onDestroy() {

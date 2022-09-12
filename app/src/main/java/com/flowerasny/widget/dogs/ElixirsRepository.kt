@@ -21,5 +21,5 @@ class ElixirsRepository {
         .build()
         .create(ElixirsApi::class.java)
 
-    suspend fun getElixirs() = elixirsApi.getElixirs()
+    suspend fun getElixirs() = elixirsApi.getElixirs().shuffled()
 }
